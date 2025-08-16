@@ -20,7 +20,27 @@ const playerExists = async (playerName) => {
     return (count > 0) ? true : false
 }
 
+const getLeaderboard = async (count) => {
+    const players = await prisma.player.findMany({
+        take: count, // number of rows to select
+        orderBy: {
+            timeTaken: 'asc'
+        },
+        where: {
+            timeTaken: {
+                not: null
+            }
+        },
+        select: {
+            name: true,
+            timeTaken: true
+        }
+    })
+    return players
+}
+
 module.exports = {
     createPlayer,
-    playerExists
+    playerExists,
+    getLeaderboard
 }
