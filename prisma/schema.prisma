@@ -19,3 +19,11 @@ model Player {
   name      String @unique
   timeTaken Int?
 }
+
+model Object {
+  id     Int     @id
+  startX Decimal @db.Decimal(4, 2)
+  endX   Decimal @db.Decimal(4, 2)
+  startY Decimal @db.Decimal(4, 2)
+  endY   Decimal @db.Decimal(4, 2)
+}
