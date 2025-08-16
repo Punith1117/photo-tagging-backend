@@ -15,15 +15,27 @@ datasource db {
 }
 
 model Player {
-  id        Int    @id @default(autoincrement())
-  name      String @unique
+  id        Int            @id @default(autoincrement())
+  name      String         @unique
   timeTaken Int?
+  objects   PlayerObject[]
 }
 
 model Object {
-  id     Int     @id
-  startX Decimal @db.Decimal(4, 2)
-  endX   Decimal @db.Decimal(4, 2)
-  startY Decimal @db.Decimal(4, 2)
-  endY   Decimal @db.Decimal(4, 2)
+  id      Int            @id
+  startX  Decimal        @db.Decimal(4, 2)
+  endX    Decimal        @db.Decimal(4, 2)
+  startY  Decimal        @db.Decimal(4, 2)
+  endY    Decimal        @db.Decimal(4, 2)
+  players PlayerObject[]
+}
+
+model PlayerObject {
+  playerId Int
+  player   Player  @relation(fields: [playerId], references: [id])
+  objectId Int
+  object   Object  @relation(fields: [objectId], references: [id])
+  found    Boolean @default(false)
+
+  @@id([playerId, objectId])
 }
