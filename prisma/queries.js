@@ -20,6 +20,18 @@ const playerExists = async (playerName) => {
     return (count > 0) ? true : false
 }
 
+const getTimeTakenByPlayer = async (id) => {
+    const row = await prisma.player.findUnique({
+        where: {
+            id
+        },
+        select: {
+            timeTaken: true
+        }
+    })
+    return row.timeTaken
+}
+
 const getLeaderboard = async (count) => {
     const players = await prisma.player.findMany({
         take: count, // number of rows to select
@@ -42,5 +54,6 @@ const getLeaderboard = async (count) => {
 module.exports = {
     createPlayer,
     playerExists,
-    getLeaderboard
+    getLeaderboard,
+    getTimeTakenByPlayer
 }
