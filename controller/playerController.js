@@ -1,5 +1,5 @@
 const { generateUsername } = require("unique-username-generator");
-const { playerExists, createPlayer } = require("../prisma/queries");
+const { playerExists, createPlayer, getTimeTakenByPlayer } = require("../prisma/queries");
 const jwt = require('jsonwebtoken');
 
 const createNewPlayerController = async (req, res) => {
@@ -18,6 +18,15 @@ const createNewPlayerController = async (req, res) => {
     })
 }
 
+const getTimeTakenController = async (req, res) => {
+    const { id } = req.user
+    const timeTaken = await getTimeTakenByPlayer(id)
+    res.json({
+        timeTaken
+    })
+}
+
 module.exports = {
-    createNewPlayerController
+    createNewPlayerController,
+    getTimeTakenController
 }
