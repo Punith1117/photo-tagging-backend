@@ -10,6 +10,17 @@ const createPlayer = async (playerName) => {
     return newPlayer
 }
 
+const playerExists = async (playerName) => {
+    const count = await prisma.player.count({
+        where: {
+            name: playerName
+        }
+    })
+
+    return (count > 0) ? true : false
+}
+
 module.exports = {
-    createPlayer
+    createPlayer,
+    playerExists
 }
