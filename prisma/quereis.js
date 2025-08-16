@@ -2,11 +2,12 @@ const { PrismaClient } = require('../generated/prisma')
 const prisma = new PrismaClient()
 
 const createPlayer = async (playerName) => {
-    await prisma.player.create({
+    const newPlayer = await prisma.player.create({
         data: {
             name: playerName
         }
     })
+    return newPlayer
 }
 
 module.exports = {
