@@ -7,6 +7,16 @@ const createPlayer = async (playerName) => {
             name: playerName
         }
     })
+
+    const objects = await prisma.object.findMany()
+
+    await prisma.playerObject.createMany({
+        data: objects.map(obj => ({
+            playerId: newPlayer.id,
+            objectId: obj.id
+        }))
+    })
+    
     return newPlayer
 }
 
