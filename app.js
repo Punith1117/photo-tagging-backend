@@ -3,6 +3,11 @@ const cors = require('cors');
 const playerRouter = require("./router/playerRouter");
 const leaderboardRouter = require("./router/leaderboardRouter");
 const app = express();
+const passport = require('./config/passport')
+app.use(express.urlencoded({ extended: false }))
+app.use(express.json())
+
+app.use(passport.initialize())
 
 require('dotenv').config();
 
