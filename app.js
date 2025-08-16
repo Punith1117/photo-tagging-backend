@@ -1,6 +1,7 @@
 const express = require("express");
 const cors = require('cors');
 const playerRouter = require("./router/playerRouter");
+const leaderboardRouter = require("./router/leaderboardRouter");
 const app = express();
 
 require('dotenv').config();
@@ -12,6 +13,7 @@ app.use(cors({
 }))
 
 app.use('/player', playerRouter)
+app.use('/leaderboard', leaderboardRouter)
 
 app.get("/health", (req, res) => res.status(200).json({status: 'ok'}));
 
