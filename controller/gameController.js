@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken')
-const { getPlayerObjects, setObjectsNotFound } = require('../prisma/queries')
+const { getPlayerObjects, setObjectsNotFound, getObject, setObjectFound } = require('../prisma/queries')
 
 const newGameController = async (req, res) => {
     const { id, playerName } = req.user
@@ -17,6 +17,43 @@ const newGameController = async (req, res) => {
     })
 }
 
+const verifyGuessController = async (req, res) => {
+    const {id, iat} = req.user
+    let currentObjects = await getPlayerObjects(id)
+
+    if (currentObjects.every(obj => obj.found == true)) {
+        res.json({
+            'message': 'The game has been already completed'
+        })
+        return
+    }
+
+    const { coordinates, objectId } = req.body
+    const object = await getObject(objectId)
+    const {startX, endX, startY, endY} = object
+    const {x, y} = coordinates
+    let timeTaken
+
+    let found = (x >= startX && x <= endX && y >= startY && y <= endY)
+    if (found) {
+        await setObjectFound(id, objectId)
+        updatedObjects = await getPlayerObjects(id)
+        const allObjectsFound = updatedObjects.every(obj => obj.found == true)
+        if (allObjectsFound) {
+            let currentTime = Math.floor(Date.now() / 1000) // Date.now() gives time in milliseconds
+            timeTaken = currentTime - iat
+        }
+    } else {
+        updatedObjects = await getPlayerObjects(id)
+    }
+    res.json({
+        found,
+        updatedObjects,
+        timeTaken
+    })
+}
+
 module.exports = {
-    newGameController
+    newGameController,
+    verifyGuessController
 }
