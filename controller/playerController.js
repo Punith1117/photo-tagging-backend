@@ -11,7 +11,7 @@ const createNewPlayerController = async (req, res) => {
     const player = await createPlayer(newPlayerName)
     const token = jwt.sign({
         id: player.id, playerName: player.name
-    }, process.env.JWT_SECRET)
+    }, process.env.PLAYER_JWT_SECRET)
 
     res.json({
         token

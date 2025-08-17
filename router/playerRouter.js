@@ -5,6 +5,6 @@ const passport = require("passport");
 const playerRouter = Router()
 
 playerRouter.post('/new', createNewPlayerController)
-playerRouter.get('/time-taken', passport.authenticate('jwt', {session: false}), getTimeTakenController)
+playerRouter.get('/time-taken', passport.authenticate('player-jwt', {session: false}), getTimeTakenController)
 
 module.exports = playerRouter
