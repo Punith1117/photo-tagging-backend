@@ -3,7 +3,8 @@ const cors = require('cors');
 const playerRouter = require("./router/playerRouter");
 const leaderboardRouter = require("./router/leaderboardRouter");
 const app = express();
-const passport = require('./config/passport')
+const passport = require('./config/passport');
+const gameRouter = require("./router/gameRouter");
 app.use(express.urlencoded({ extended: false }))
 app.use(express.json())
 
@@ -19,6 +20,7 @@ app.use(cors({
 
 app.use('/player', playerRouter)
 app.use('/leaderboard', leaderboardRouter)
+app.use('/game', gameRouter)
 
 app.get("/health", (req, res) => res.status(200).json({status: 'ok'}));
 
