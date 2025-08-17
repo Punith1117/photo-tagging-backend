@@ -61,9 +61,19 @@ const getLeaderboard = async (count) => {
     return players
 }
 
+const getPlayerObjects = async (playerId) => {
+    const playerObjects = await prisma.playerObject.findMany({
+        where: {
+            playerId
+        }
+    })
+    return playerObjects
+}
+
 module.exports = {
     createPlayer,
     playerExists,
     getLeaderboard,
-    getTimeTakenByPlayer
+    getTimeTakenByPlayer,
+    getPlayerObjects
 }
