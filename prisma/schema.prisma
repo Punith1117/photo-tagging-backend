@@ -32,9 +32,9 @@ model Object {
 
 model PlayerObject {
   playerId Int
-  player   Player  @relation(fields: [playerId], references: [id])
+  player   Player  @relation(fields: [playerId], references: [id], onDelete: Cascade)
   objectId Int
-  object   Object  @relation(fields: [objectId], references: [id])
+  object   Object  @relation(fields: [objectId], references: [id], onDelete: Cascade)
   found    Boolean @default(false)
 
   @@id([playerId, objectId])
