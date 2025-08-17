@@ -81,11 +81,21 @@ const setObjectsNotFound = async (playerId) => {
     })
 }
 
+const getObject = async (objectId) => {
+    const object = await prisma.object.findUnique({
+        where: {
+            id: objectId
+        }
+    })
+    return object
+}
+
 module.exports = {
     createPlayer,
     playerExists,
     getLeaderboard,
     getTimeTakenByPlayer,
     getPlayerObjects,
-    setObjectsNotFound
+    setObjectsNotFound,
+    getObject
 }
