@@ -1,7 +1,8 @@
 {
   "scripts": {
     "dev": "node --watch app.js",
-    "start": "node app.js"
+    "start": "node app.js",
+    "sync-new-objects": "node syncNewObjects.js"
   },
   "dependencies": {
     "@prisma/client": "^6.14.0",
