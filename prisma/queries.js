@@ -104,6 +104,17 @@ const setObjectFound = async (playerId, objectId) => {
     })
 }
 
+const setTimeTaken = async (playerId, timeTaken) => {
+    await prisma.player.update({
+        where: {
+            id: playerId
+        },
+        data: {
+            timeTaken
+        }
+    })
+}
+
 module.exports = {
     createPlayer,
     playerExists,
@@ -112,5 +123,6 @@ module.exports = {
     getPlayerObjects,
     setObjectsNotFound,
     getObject,
-    setObjectFound
+    setObjectFound,
+    setTimeTaken
 }
