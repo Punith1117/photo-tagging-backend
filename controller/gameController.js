@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken')
-const { getPlayerObjects, setObjectsNotFound, getObject, setObjectFound } = require('../prisma/queries')
+const { getPlayerObjects, setObjectsNotFound, getObject, setObjectFound, getTimeTakenByPlayer, setTimeTaken } = require('../prisma/queries')
 
 const newGameController = async (req, res) => {
     const { id, playerName } = req.user
@@ -42,6 +42,10 @@ const verifyGuessController = async (req, res) => {
         if (allObjectsFound) {
             let currentTime = Math.floor(Date.now() / 1000) // Date.now() gives time in milliseconds
             timeTaken = currentTime - iat
+            const currentTimeTaken = await getTimeTakenByPlayer(id)
+            if(typeof currentTimeTaken != "number") {
+                await setTimeTaken(id, timeTaken)
+            }
         }
     } else {
         updatedObjects = await getPlayerObjects(id)
