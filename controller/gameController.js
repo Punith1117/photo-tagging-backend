@@ -6,7 +6,7 @@ const newGameController = async (req, res) => {
     const token = jwt.sign({
         id,
         playerName
-    }, process.env.GAME_JWT_SECRET, {expiresIn: 50})
+    }, process.env.GAME_JWT_SECRET, {expiresIn: 100})
 
     await setObjectsNotFound(id)
     const initialObjects = await getPlayerObjects(id)
