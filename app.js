@@ -3,6 +3,11 @@ const cors = require('cors');
 const playerRouter = require("./router/playerRouter");
 const leaderboardRouter = require("./router/leaderboardRouter");
 const app = express();
+app.use(cors({
+    origin: '*',
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization']
+}))
 const passport = require('./config/passport');
 const gameRouter = require("./router/gameRouter");
 app.use(express.urlencoded({ extended: false }))
@@ -12,11 +17,6 @@ app.use(passport.initialize())
 
 require('dotenv').config();
 
-app.use(cors({
-    origin: '*',
-    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-    allowedHeaders: ['Content-Type', 'Authorization']
-}))
 
 app.use('/player', playerRouter)
 app.use('/leaderboard', leaderboardRouter)
